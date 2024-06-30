@@ -126,7 +126,7 @@ def get_scores():
     
 
 if __name__ == '__main__':
-
- 
-    app.run(debug=True)
-
+    try:
+        app.run(host='0.0.0.0', debug=False)
+    except Exception as e:
+        print("An error occurred while running the server:", e)
