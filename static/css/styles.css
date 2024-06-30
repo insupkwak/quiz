@@ -73,6 +73,7 @@ img {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    text-align: center;
 }
 
 .result-container {
@@ -82,6 +83,7 @@ img {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    text-align: center;
 }
 
 .result-container p {
@@ -106,17 +108,12 @@ img {
     color: #721c24;
 }
 
-
-
-
-
-
 table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
-    text-align: left;
+    text-align: center; /* 가운데 정렬 */
 }
 table th, table td {
     padding: 12px;
@@ -131,16 +128,6 @@ table tr:nth-child(even) {
 .hidden {
     display: none;
 }
-
-
-
-
-
-
-
-
-
-
 
 /* 모바일 대응을 위한 미디어 쿼리 */
 @media screen and (max-width: 600px) {

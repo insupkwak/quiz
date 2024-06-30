@@ -18,9 +18,28 @@ def get_db_connection():
 
 
 
+def increment_visit_count():
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute("UPDATE visit_count SET count = count + 1")
+    connection.commit()
+    cursor.execute("SELECT count FROM visit_count")
+    count = cursor.fetchone()[0]
+    cursor.close()
+    connection.close()
+    return count
+
+
+
+
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    
+    visit_count = increment_visit_count()
+    return render_template('index.html', visit_count=visit_count)
+   
+
 
 @app.route('/start_game', methods=['POST'])
 def start_game():
@@ -126,6 +145,7 @@ def get_scores():
     
 
 if __name__ == '__main__':
+   
     try:
         app.run(host='0.0.0.0', debug=False)
     except Exception as e:

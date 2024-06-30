@@ -8,8 +8,17 @@
     <script>
         function askForSavingScore(score, allCorrect) {
             const message = allCorrect ? 
-                `모든 문제를 맞추셨습니다!!! 총 ${score} 문제를 맞추셨습니다. 기록을 저장하시려면 이름을 입력하세요:` :
-                `틀렸습니다. 총 ${score} 문제를 맞추셨습니다. 기록을 저장하시려면 이름을 입력하세요:`;
+`모든 문제를 맞추셨습니다!!! 
+
+총 ${score} 문제를 맞추셨습니다. 
+                
+ 기록을 저장하시려면 이름을 입력하세요:` :
+                
+`틀렸습니다. 
+
+총 ${score} 문제를 맞추셨습니다. 
+                
+기록을 저장하시려면 이름을 입력하세요:`;
             
             const playerName = prompt(message);
             if (playerName) {
