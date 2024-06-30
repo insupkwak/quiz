@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나라 수도 맞추기 게임</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>문제 {{ question_number }}</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <img src="{{ country['flag_url'] }}" alt="{{ country['country_name'] }}의 국기">
+        <p class="question">{{ country['country_name'] }}의 수도는 어디일까요?</p>
+        <form action="{{ url_for('submit_answer') }}" method="post">
+            <input type="hidden" name="correct_answer" value="{{ country['capital_name'] }}">
+            {% for option in options %}
+                <div>
+                    <input type="radio" id="{{ option }}" name="capital" value="{{ option }}" required>
+                    <label for="{{ option }}">{{ option }}</label>
+                </div>
+            {% endfor %}
+            <button type="submit">제출</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flashes = document.querySelectorAll('.flash');
+            flashes.forEach(flash => {
+                setTimeout(() => {
+                    flash.style.display = 'none';
+                }, 1000); // 알림 표시 시간을 3초로 설정
+            });
+        });
+    </script>
+</body>
+</html>

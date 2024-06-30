@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나라 수도 맞추기 게임</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  
+</head>
+<body>
+    <div class="container">
+        <h1>나라 수도 맞추기 게임</h1>
+        <form action="{{ url_for('start_game') }}" method="post">
+            <button type="submit">게임 시작</button>
+        </form>
+        <button onclick="toggleScores()">기록 보기</button>
+        <div id="scores-table" class="hidden">
+            <table>
+                <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>이름</th>
+                        <th>점수</th>
+                    </tr>
+                </thead>
+                <tbody id="scores-body">
+                    <!-- 점수 데이터가 여기에 추가됩니다 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function toggleScores() {
+            const scoresTable = document.getElementById('scores-table');
+            if (scoresTable.classList.contains('hidden')) {
+                fetchScores();
+            } else {
+                scoresTable.classList.add('hidden');
+            }
+        }
+
+        function fetchScores() {
+            fetch("{{ url_for('get_scores') }}")
+                .then(response => response.json())
+                .then(data => {
+                    const scoresBody = document.getElementById('scores-body');
+                    scoresBody.innerHTML = '';
+                    data.forEach(score => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${score.rank}</td><td>${score.player_name}</td><td>${score.score}</td>`;
+                        scoresBody.appendChild(row);
+                    });
+                    document.getElementById('scores-table').classList.remove('hidden');
+                })
+                .catch(error => console.error('Error fetching scores:', error));
+        }
+    </script>
+</body>
+</html>

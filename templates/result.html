@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나라 수도 맞추기 게임</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function askForSavingScore(score, allCorrect) {
+            const message = allCorrect ? 
+                `모든 문제를 맞추셨습니다!!! 총 ${score} 문제를 맞추셨습니다. 기록을 저장하시려면 이름을 입력하세요:` :
+                `틀렸습니다. 총 ${score} 문제를 맞추셨습니다. 기록을 저장하시려면 이름을 입력하세요:`;
+            
+            const playerName = prompt(message);
+            if (playerName) {
+                fetch("{{ url_for('save_score') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ player_name: playerName, score: score })
+                }).then(response => {
+                    if (response.ok) {
+                        alert("기록이 저장되었습니다.");
+                        window.location.href = "{{ url_for('index') }}";
+                    } else {
+                        alert("기록 저장에 실패했습니다.");
+                    }
+                });
+            } else {
+                window.location.href = "{{ url_for('index') }}";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var allCorrect = JSON.parse('{{ all_correct | tojson | safe }}');
+            var score = JSON.parse('{{ score | tojson | safe }}');
+            askForSavingScore(score, allCorrect);
+        });
+    </script>
+</head>
+<body>
+    <div class="result-container">
+   
+ 
+    </div>
+</body>
+</html>
